@@ -108,6 +108,45 @@ def yes_or_no(question: str) -> bool:
     return False
 
 
+def write_status_crew(crew: list) -> None:
+    """crew[i] -> [{stability: int}, {name: str}, {location: str}]
+    write: '#========  # {name} - {location}'"""
+    for person in crew:
+        print("#" + "=" * (person[0] // 10) + " " * (10 - person[0] // 10) + "# " + person[1] + " - " + person[2])
+
+
+class User:
+    def __init__(self, name: str, stability: int, location: str, live: bool):
+        self.name = name
+        self.is_live = live
+        self.stability = 100 if stability > 100 else stability  # не может быть больше 100
+        self.location = location
+
+    def update_stability(self, delta: int):
+        self.stability += delta
+        self.stability = 100 if self.stability > 100 else self.stability  # не может быть больше 100
+
+    def go_to(self, location):
+        self.location = location
+
+    def is_alive(self):
+        return self.stability > 0 and self.is_live
+
+
+class Room:
+    def __init__(self, location):
+        # location name
+        self.location = location
+
+    def entry(self, user: User):
+        """Change location for user"""
+        user.go_to(self.location)
+
+    def make_action_with_user(self, user):
+        """Action there"""
+        pass
+
+
 if __name__ == '__main__':
     """save_arg("sad", "yes")
     save_arg("sad2", "yes")
