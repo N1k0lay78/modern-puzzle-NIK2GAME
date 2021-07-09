@@ -1,7 +1,7 @@
 from time import sleep
 
 
-def load(size, delta=0.23):
+def load(size, delta=0.23) -> None:
     """size is count of equals to load
     minimal recommended delay is 0.23"""
     proc = 0
@@ -13,7 +13,7 @@ def load(size, delta=0.23):
     print("\a\nComplete!")
 
 
-def running_string(text, delay=0.23, visible=5):
+def running_string(text, delay=0.23, visible=5) -> None:
     """ text is text to run
     visible how hutch chars show
     minimal recommended delay is 0.23"""
@@ -24,7 +24,7 @@ def running_string(text, delay=0.23, visible=5):
         sleep(delay)
 
 
-def write_text(text, speed=0.23):
+def write_text(text, speed=0.23) -> None:
     """writing text by char
     speed - how much delay between write chars"""
     for i in range(len(text)):
@@ -35,12 +35,56 @@ def write_text(text, speed=0.23):
         sleep(speed)
 
 
+def check_choice(variants: list):
+    """variants is variants of user choice
+    choice: 'Ваш выбор: {variant}'
+    error: 'Некоректные данные!'"""
+    variants = [str(elem) for elem in variants]
+    while True:
+        try:
+            answer = input('Ваш выбор: ')
+            if answer in variants:
+                return answer
+        except Exception:
+            pass
+        print("Некоректные данные!")
+
+
+def make_choice(variants: list) -> int:
+    """variants[i] -> [{variant: str}, {id: int}]
+    variant: '{id} - {variant}'
+    :return player choice id"""
+    for variant in variants:
+        print(str(variant[1]) + " - " + variant[0])
+    return int(check_choice(list(map(lambda x: x[1], variants))))
+
+
+def yes_or_no(question: str) -> bool:
+    """question is question for user
+    like: {question}
+    'yes (y/1) / no (n/2)'
+    :return boolean of user choice"""
+    print(question)
+    print('yes (y/1) / no (n/2)')
+    user_choice = check_choice(["yes", "y", "1", "no", "n", "2"])
+    if user_choice in ["yes", "y", "1"]:
+        return True
+    return False
+
+
 if __name__ == '__main__':
-    running_string(" "*len(" qwerty ") + "computer password is: qwerty", visible=len(" qwerty "))
-    print("\nPassword: ", end="")
-    sleep(0.3)
-    write_text("qwerty", 0.35)
-    print()
-    load(20)
-    sleep(0.3)
-    write_text("Your computer has been hacked!", 0.22)
+    choice = make_choice([["смотреть технодемку", 1], ["пропустить технодемку", 2]])
+    if choice == 1:
+        if yes_or_no("Взломать комп?"):
+            running_string(" "*len(" qwerty ") + "computer password is: qwerty", visible=len(" qwerty "))
+            print("\nPassword: ", end="")
+            sleep(0.3)
+            write_text("qwerty", 0.35)
+            print()
+            load(20)
+            sleep(0.3)
+            write_text("Your computer has been hacked!", 0.22)
+        else:
+            write_text("Your computer has not been hacked!", 0.22)
+    else:
+        write_text("Technology demonstration has been skipped!", 0.22)
