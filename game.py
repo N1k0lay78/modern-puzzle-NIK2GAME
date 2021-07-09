@@ -1,6 +1,42 @@
 from time import sleep
 
 
+def save_arg(arg, value):
+    """Save/rewrite your argument to txt file
+    First parameter is name of argument, second his value"""
+    f = open("test_file.txt", "r")
+    dict_arg = {}
+    for line in f.read().split("\n"):
+        if line.split() != []:
+            ln = line.split()
+            dict_arg[ln[0]] = " ".join(ln[1:])
+    f.close()
+    f = open("test_file.txt", "w")
+    dict_arg[arg] = value
+    for key in list(dict_arg.keys()):
+        print(f"{key} {dict_arg[key]}")
+        f.write(f"{key} {dict_arg[key]}\n")
+    f.close()
+
+
+def delete_arg(arg):
+    """Delete argument from txt file
+    First parameter is name of argument"""
+    f = open("test_file.txt", "r")
+    dict_arg = {}
+    for line in f.read().split("\n"):
+        if line.split() != []:
+            ln = line.split()
+            if ln[0] != arg:
+                dict_arg[ln[0]] = " ".join(ln[1:])
+    f.close()
+    f = open("test_file.txt", "w")
+    for key in list(dict_arg.keys()):
+        print(f"{key} {dict_arg[key]}")
+        f.write(f"{key} {dict_arg[key]}\n")
+    f.close()
+
+
 def load(size, delta=0.23) -> None:
     """size is count of equals to load
     minimal recommended delay is 0.23"""
@@ -73,6 +109,12 @@ def yes_or_no(question: str) -> bool:
 
 
 if __name__ == '__main__':
+    """save_arg("sad", "yes")
+    save_arg("sad2", "yes")
+    save_arg("sad3", "yes")
+    delete_arg("sad3")
+    save_arg("sad2", "no")"""
+
     choice = make_choice([["смотреть технодемку", 1], ["пропустить технодемку", 2]])
     if choice == 1:
         if yes_or_no("Взломать комп?"):
