@@ -72,7 +72,24 @@ def yes_or_no(question: str) -> bool:
     return False
 
 
+def write_status_crew(crew: list) -> None:
+    """crew[i] -> [{stability: int}, {name: str}, {location: str}]
+    write: '#========  # {name} - {location}'"""
+    for person in crew:
+        print("#" + "=" * (person[0] // 10) + " " * (10 - person[0] // 10) + "# " + person[1] + " - " + person[2])
+
+
 if __name__ == '__main__':
+    write_status_crew([
+        [100, "Игрок   ", "пункт управления"],
+        [90,  "Альберт ", "в космосе"],
+        [70,  "Олег    ", "в жилом помещении"],
+        [0,  "くそっ。 ", "умер"],
+        [40,  "Салумыка", "в шлюзе"],
+        [30,  "Андрей  ", "спит"],
+        [20,  "Хуй     ", "в столовой"],
+        [10,  "Серый   ", "в космосе"]
+    ])
     choice = make_choice([["смотреть технодемку", 1], ["пропустить технодемку", 2]])
     if choice == 1:
         if yes_or_no("Взломать комп?"):
