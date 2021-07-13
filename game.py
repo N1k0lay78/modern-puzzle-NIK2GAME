@@ -1,4 +1,5 @@
 from time import sleep
+from texts import chapters
 
 
 def save_arg(arg, value):
@@ -69,6 +70,12 @@ def write_text(text, speed=0.23) -> None:
             sleep(speed/3)
             continue
         sleep(speed)
+
+
+def write_chapter(id, delay=0.5):
+    text = chapters[id]
+    write_text(text, 0.12)
+    print()
 
 
 def check_choice(variants: list):
@@ -153,19 +160,23 @@ if __name__ == '__main__':
     save_arg("sad3", "yes")
     delete_arg("sad3")
     save_arg("sad2", "no")"""
-
+    write_chapter(1)
     choice = make_choice([["смотреть технодемку", 1], ["пропустить технодемку", 2]])
     if choice == 1:
         if yes_or_no("Взломать комп?"):
             running_string(" "*len(" qwerty ") + "computer password is: qwerty", visible=len(" qwerty "))
             print("\nPassword: ", end="")
             sleep(0.3)
-            write_text("qwerty", 0.35)
+            write_text("qwerty", 0.15)
             print()
             load(20)
             sleep(0.3)
-            write_text("Your computer has been hacked!", 0.22)
+            write_text("Your computer has been hacked!", 0.1)
+            print()
         else:
-            write_text("Your computer has not been hacked!", 0.22)
+            write_text("Your computer has not been hacked!", 0.1)
+            print()
     else:
-        write_text("Technology demonstration has been skipped!", 0.22)
+        write_text("Technology demonstration has been skipped!", 0.1)
+        print()
+input("Нажмите Inter что бы выйти")
